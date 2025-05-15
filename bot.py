@@ -1,8 +1,9 @@
 import discord
 from discord.ext import commands
+import os
 
 intents = discord.Intents.default()
-intents.members = True  # メンバーのロール変更を検知するために必要
+intents.members = True
 
 bot = commands.Bot(command_prefix='!', intents=intents)
 
@@ -12,7 +13,7 @@ async def on_ready():
 
 @bot.event
 async def on_member_update(before, after):
-    booster_role_id = 1249722860126076949  # ブースターのロールIDに置き換えてね
+    booster_role_id = 1249722860126076949  # ←ブースターロールのID
     perk_roles = [
         1372488450581987419,  # 特典ロールハル
         1372488680152895499,  # 特典ロールシオン
@@ -26,11 +27,10 @@ async def on_member_update(before, after):
     is_booster = booster_role_id in after_roles
 
     if was_booster and not is_booster:
-        # ブースターが解除された場合
-        # ユーザーが持っていた特典ロールを削除（最大1個）
         roles_to_remove = [discord.Object(id=rid) for rid in perk_roles if rid in after_roles]
         if roles_to_remove:
             await after.remove_roles(*roles_to_remove)
             print(f'Removed perk role(s) from {after.display_name}')
 
-bot.run('YOUR_BOT_TOKEN')  # トークンを実際のものに置き換えてね
+TOKEN = os.getenv("DISCORD_BOT_TOKEN")
+bot.run(TOKEN)
