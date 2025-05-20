@@ -33,6 +33,5 @@ async def on_member_update(before, after):
             print(f'Removed perk role(s) from {after.display_name}')
 
 TOKEN = os.getenv("DISCORD_BOT_TOKEN")
-print(f"TOKEN is: {TOKEN}")
 print("TOKEN is", "set" if TOKEN else "not set")
 bot.run(TOKEN)
