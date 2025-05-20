@@ -1,5 +1,5 @@
 app = "discord-role-bot-b-k9-w"
-primary_region = "nrt"
+primary_region = "nrt" # デプロイしたい
 
 [http_service]
 auto_start_machines = true
