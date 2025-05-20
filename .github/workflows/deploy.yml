@@ -1,22 +1,21 @@
-name: Deploy to Fly.io
+name: Deploy to Fly.io every 12 hours
 
 on:
-  push:
-    branches:
-      - main  # またはあなたのメインブランチ名
+  schedule:
+    - cron: '0 */12 * * *'  # 毎日0時・12時に実行
+  workflow_dispatch:       # 手動実行もできる
 
 jobs:
   deploy:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v3
+    - uses: actions/checkout@v3
 
-      - name: Set up Fly.io
-        uses: superfly/flyctl-actions/setup-flyctl@master
+    - name: Set up Fly CLI
+      uses: superfly/flyctl-actions/setup-flyctl@master
 
-      - name: Deploy to Fly.io
-        run: flyctl deploy --remote-only
-        env:
-          FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}
+    - name: Deploy to Fly
+      run: flyctl deploy --remote-only
+      env:
+        FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}
