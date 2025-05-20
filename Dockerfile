@@ -1,14 +1,15 @@
-# Pythonの公式イメージを使用
-FROM python:3.11
+# Python 3.11ベース
+FROM python:3.11-slim
 
-# 作業ディレクトリを作成
+# 作業ディレクトリ
 WORKDIR /app
 
-# ファイルをコピー
-COPY . /app
-
-# 依存関係をインストール
+# 依存関係をコピーしてインストール
+COPY requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt
 
-# Botを起動（bot.pyを使ってる前提）
+# アプリコードをコピー
+COPY . .
+
+# bot.py を実行
 CMD ["python", "bot.py"]
