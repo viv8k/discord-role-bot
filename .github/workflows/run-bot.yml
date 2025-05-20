@@ -1,0 +1,24 @@
+name: Run Discord Bot every 12h
+
+on:
+  schedule:
+    - cron: "0 */12 * * *"  # 12時間ごとに実行
+  workflow_dispatch:        # 手動実行もできる
+
+jobs:
+  run-bot:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: 3.11
+      - name: Install dependencies
+        run: |
+          pip install -r requirements.txt
+      - name: Run bot
+        env:
+          DISCORD_BOT_TOKEN: ${{ secrets.DISCORD_BOT_TOKEN }}
+        run: |
+          python bot.py
