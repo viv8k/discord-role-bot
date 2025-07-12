@@ -2,7 +2,7 @@ name: Run Discord Bot every 12h
 
 on:
   schedule:
-    - cron: "0 */12 * * *"  # 12時間ごとに実行
+    - cron: "0 */12 * * *"  # 12時間ごとに実行、だけど60日放置すると無効になるのでコミットが必要（2025.7.12にしました）
   workflow_dispatch:        # 手動実行もできる
 
 jobs:
